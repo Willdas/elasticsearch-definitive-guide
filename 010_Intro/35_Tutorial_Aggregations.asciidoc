@@ -4,7 +4,18 @@
 终于到了最后一个业务需求：支持管理者对雇员目录做分析。((("analytics"))) Elasticsearch 有一个功能叫聚合（aggregations），((("aggregations")))允许我们基于数据生成一些精细的分析结果。聚合与 SQL 中的 `GROUP BY` 类似但更强大。
 
 举个例子，挖掘出雇员中最受欢迎的兴趣爱好：
-
+在使用如下命令前,由于fielddata默认是禁止的，需要先开启fielddata
+命令如下：
+PUT /megacorp/_mapping/employee 
+{
+  "properties": {
+    "interests": {
+      "type": "text",
+      "fielddata": true
+    }
+  }
+}
+出现：{"acknowledged":true}，表示成功
 [source,js]
 --------------------------------------------------
 GET /megacorp/employee/_search
